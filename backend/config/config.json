@@ -1,0 +1,24 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./database.sqlite"
+  },
+  "staging": {
+    "host": "",
+    "port": "",
+    "database": "",
+    "username": "",
+    "password": "",
+    "dialect": "",
+    "operatorsAliases": 0
+  },
+  "production": {
+    "host": "",
+    "port": "",
+    "database": "",
+    "username": "",
+    "password": "",
+    "dialect": "",
+    "operatorsAliases": 0
+  }
+}
