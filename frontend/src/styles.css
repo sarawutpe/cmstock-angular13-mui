@@ -30,12 +30,16 @@ body {
   background-color: red;
 }
 
-
 .custom-backdrop.custom-backdrop {
   background-color: black;
   opacity: 0.9;
 }
 
-mat-card, .mat-expansion-panel.mat-expansion-panel{
+mat-card,
+.mat-expansion-panel.mat-expansion-panel {
   margin-bottom: 20px;
+}
+
+.background-sky {
+  background: linear-gradient(145deg, #0d47a1, #42a5f5);
 }
