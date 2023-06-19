@@ -1,28 +1,50 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { Component, OnDestroy } from '@angular/core'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 
-import { MediaMatcher } from '@angular/cdk/layout'
-import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
+interface Test {
+  a: string
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnDestroy{
-  mobileQueryMax: MediaQueryList;
+export class AppComponent implements OnDestroy {
+  destroyed = new Subject<void>()
+  breakpointXSmall: boolean = false
 
-  private _mobileQueryListener: ()=> void;
+  // Create a map to display breakpoint names for demonstration purposes.
+  displayNameMap = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ])
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher){
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQueryMax = media.matchMedia('(max-width: 600px)');
-    this.mobileQueryMax.addListener(this._mobileQueryListener)
+  constructor(breakpointObserver: BreakpointObserver) {
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe(takeUntil(this.destroyed))
+      .subscribe((result) => {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.breakpointXSmall = true
+        } else {
+          this.breakpointXSmall = false
+        }
+      })
   }
-
-  ngOnDestroy(): void {
-    this.mobileQueryMax.removeListener(this._mobileQueryListener)
-  }
-
-  onSayHi(text: String){
-    // alert(text)
+  ngOnDestroy() {
+    this.destroyed.next()
+    this.destroyed.complete()
   }
 }

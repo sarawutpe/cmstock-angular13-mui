@@ -1,66 +1,57 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { Product, ProductResponse } from 'src/app/models/product.model';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import Swal from 'sweetalert2';
-import { NetworkService } from 'src/app/services/network.service';
-import { LoadingService } from 'src/app/services/loading.service';
+import { HttpClient } from '@angular/common/http'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatPaginator } from '@angular/material/paginator'
+import { MatSort } from '@angular/material/sort'
+import { MatTableDataSource } from '@angular/material/table'
+import { LoadingService } from 'src/app/services/loading.service'
+import { NetworkService } from 'src/app/services/network.service'
+import { Product, ProductResponse } from 'src/models/product.model'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-stock-home',
   templateUrl: './stock-home.component.html',
-  styleUrls: ['./stock-home.component.css']
+  styleUrls: ['./stock-home.component.css'],
 })
 export class StockHomeComponent implements OnInit {
-
-  displayedColumns = ['image', 'name', 'price', 'stock', 'action']
-
-  dataSource = new MatTableDataSource<ProductResponse>();
-
-  textSearch!: string;
+  displayedColumns: string[] = ['image', 'name', 'price', 'stock', 'action']
+  dataSource = new MatTableDataSource<Product>()
+  textSearch: string | undefined
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
 
-  constructor(private networkService: NetworkService) { }
+  constructor(private netWorkService: NetworkService) {}
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
-
-    this.feedData();
+    this.feedData()
   }
 
   feedData() {
-    this.networkService.getProducts().subscribe(
-      data => {
-        this.dataSource.data = data.map(item => {
-          item.image = this.networkService.getProductImageURL(item.image)
-          return item;
+    this.netWorkService.getProducts().subscribe({
+      next: (data) => {
+        this.dataSource.data = data.map((item) => {
+          item.image = this.netWorkService.getProductImageURL(item.image)
+          return item
         })
       },
-      error => {
-        console.log(JSON.stringify(error.error.message))
-      },
-      () => {
-        console.log("feed network done")
-      }
-    )
-
+      error: (error) => {},
+      complete: () => {},
+    })
   }
 
-
   search(event: Event | null) {
-    let fliterValue = '';
+    let filterValue = ''
     if (event) {
-      fliterValue = (event.target as HTMLInputElement).value;
+      filterValue = (event.target as HTMLInputElement).value
     }
-    this.dataSource.filter = fliterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase()
   }
 
   clearSearch() {
-    this.textSearch = '';
+    this.textSearch = ''
     this.search(null)
   }
 
@@ -72,17 +63,15 @@ export class StockHomeComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
-      if (result.value) {
-        this.networkService.deleteProduct(product.id).subscribe(
-          data => {
+      if (result.isConfirmed) {
+        this.netWorkService.deleteProductById(product.id).subscribe({
+          next: (data) => {
             this.feedData()
           },
-          error => {
-            console.log(JSON.stringify(error.error.message))
-          }
-        )
+          error: (error: any) => {},
+        })
       }
     })
   }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StockHomeComponent } from './stock-home.component';
 
@@ -6,14 +6,12 @@ describe('StockHomeComponent', () => {
   let component: StockHomeComponent;
   let fixture: ComponentFixture<StockHomeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [ StockHomeComponent ]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(StockHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

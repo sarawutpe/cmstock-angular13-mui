@@ -1,45 +1,41 @@
 <mat-card>
-    <form #productForm="ngForm" (submit)="onSubmit(productForm)" enctype="multipart/form-data">
-        <mat-card-header>
-            <mat-card-title class="d-flex justify-content-between align-items-center">
-                <span>Create Product</span>
-                <button mat-raised-button color="primary" type="submit">submit</button>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content class="p-3">
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input ngModel name="name" matInput required>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-3">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Price</mat-label>
-                        <input ngModel name="price" matInput type="number" required>
-                    </mat-form-field>
-                </div>
-                <div class=" col-md-3">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Stock</mat-label>
-                        <input ngModel name="stock" matInput type="number" required>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-md-4" *ngIf="imagePreview">
-                    <img class="img-fluid border" [src]="imagePreview" alt="">
-                </div>
-                <div class="col-md-8">
-                    <button mat-stroked-button (click)="fileInput.click()" type="button">
-                        <mat-icon>photo</mat-icon>
-                        <span>Select image</span>
-                    </button>
-                    <input (change)="onPreviewImage($event)" #fileInput type="file" accept="image/*">
-                </div>
-            </div>
-        </mat-card-content>
-    </form>
+  <form #productForm="ngForm" (submit)="onSubmit(productForm)">
+    <mat-card-header>
+      <mat-card-title class="d-flex justify-content-between align-items-center">
+        <span>Create Product</span>
+        <button mat-raised-button color="primary" type="submit">submit</button>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-2">
+      <!-- form -->
+      <div class="flex mb-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input ngModel name="name" type="text" matInput required />
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Price</mat-label>
+          <input ngModel name="price" type="number" matInput required />
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Stock</mat-label>
+          <input ngModel name="stock" type="number" matInput required />
+        </mat-form-field>
+      </div>
+      <!-- img -->
+      <div class="d-flex flex-column flex-md-row flex-sm-column">
+        <div class="me-4 mb-2" *ngIf="imagePreview">
+          <img [src]="imagePreview" width="200" height="200" alt="" />
+        </div>
+        <div class="mb-2">
+          <button type="button" (click)="fileInput.click()" mat-stroked-button>
+            <mat-icon class="material-symbols-outlined">photo</mat-icon>
+            <span>Select image</span>
+          </button>
+          <input (change)="onPreviewImage($event)" #fileInput type="file" accept="image/*" />
+        </div>
+      </div>
+    </mat-card-content>
+  </form>
 </mat-card>

@@ -1,41 +1,47 @@
 <mat-toolbar color="primary">
-    <button (click)="onClickNavToggle()" mat-button>
-        <mat-icon>menu</mat-icon>
+  <button (click)="onClickNavToggle()" mat-button>
+    <mat-icon class="material-symbols-outlined">menu</mat-icon>
+  </button>
+  <span *ngIf="!breakpointXSmall">MYPOS</span>
+  <span class="flex-fill"></span>
+  <div class="d-flex align-items-center">
+    <button mat-button aria-label="Example">
+      <mat-icon class="material-symbols-outlined">search</mat-icon>
     </button>
-    <span *ngIf="!mobileQueryMax">POS</span>
-    <span class="flex-fill"></span>
-    <div class="d-flex align-items-center">
-        <button mat-button aria-label="Example icon-button with a heart icon">
-            <mat-icon>search</mat-icon>
-        </button>
-        <div class="vl"></div>
-        <button mat-button aria-label="Example icon-button with a heart icon">
-            <mat-icon [matBadge]="demoMailNoti" matBadgeColor="accent">mail_outline</mat-icon>
-        </button>
-        <div class="vl"></div>
-        <button mat-button aria-label="Example icon-button with a heart icon">
-            <mat-icon [matBadge]="demoNoti" matBadgeColor="warn">notifications_none</mat-icon>
-        </button>
-    </div>
-
-    <button mat-button [matMenuTriggerFor]="menu">
-        <img class="avatar rounded-circle bg-white"
-            src="assets/images/angular.svg"
-            alt="">
-        <span class="mx-2">Admin</span>
+    <div class="vl"></div>
+    <button mat-button aria-label="Example">
+      <mat-icon [matBadge]="demoMailNoti" class="material-symbols-outlined" matBadgeColor="accent"
+        >mail</mat-icon
+      >
     </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-            <mat-icon>dialpad</mat-icon>
-            <span>Redial</span>
-        </button>
-        <button mat-menu-item disabled>
-            <mat-icon>voicemail</mat-icon>
-            <span>Check voice mail</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-        </button>
-    </mat-menu>
+    <div class="vl"></div>
+    <button mat-button aria-label="Example">
+      <mat-icon [matBadge]="demoNoti" class="material-symbols-outlined" matBadgeColor="accent"
+        >notifications</mat-icon
+      >
+    </button>
+  </div>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <img
+      class="avatar rounded-circle bg-white"
+      src="assets/images/angular.svg"
+      alt=""
+      srcset=""
+    />
+    <span class="mx-1">Admin Angular</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon class="material-symbols-outlined">personal</mat-icon>
+      <span>Account</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon class="material-symbols-outlined">settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon class="material-symbols-outlined">exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

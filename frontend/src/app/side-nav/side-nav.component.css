@@ -1,3 +1,8 @@
-.is_active.is_active{
-  background-color: #ffc107;
+.mat-nav-list a {
+  border-left: 4px solid white;
+}
+
+.mat-nav-list a.link-active {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-left: 4px solid #dd0f31;
 }

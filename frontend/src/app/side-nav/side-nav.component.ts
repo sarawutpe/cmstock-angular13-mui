@@ -1,20 +1,18 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
-  styleUrls: ['./side-nav.component.css']
+  styleUrls: ['./side-nav.component.css'],
 })
 export class SideNavComponent implements OnInit {
+  @Output() onClose = new EventEmitter()
 
-  @Output("close") navClose = new EventEmitter();
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onClickNavClose() {
-    this.navClose.emit();
+    this.onClose.emit()
   }
 }
